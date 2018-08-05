@@ -1,0 +1,26 @@
+{
+  "name": "@portpi/server",
+  "version": "0.0.1",
+  "description": "PortPi Restful server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/portpi/server.git"
+  },
+  "keywords": [
+    "portpi"
+  ],
+  "author": "Vivo Xu <vivo@fancyber.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/portpi/server/issues"
+  },
+  "homepage": "https://github.com/portpi/server#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "morgan": "^1.9.0"
+  }
+}
