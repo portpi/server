@@ -4,6 +4,6 @@ const routes = [
 
 module.exports = (app) => {
   routes.map(route => {
-    app.use(`/${route}`, require(`./${route}`)(app));
+    app.use(`/api/${route}`, require(`./${route}`)(app));
   });
 };
