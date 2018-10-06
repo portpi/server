@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { AppBar, Toolbar, Typography, withStyles } from '@material-ui/core';
+import AppList from './components/apps/AppList';
 
 const styles = theme => ({
-  container: {
-    padding: theme.spacing.unit * 2
-  },
 });
 
 class App extends Component {
@@ -18,9 +16,7 @@ class App extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <section className={this.props.classes.container}>
-          <Typography variant="body1">No apps available.</Typography>
-        </section>
+        <AppList/>
       </section>
     );
   }

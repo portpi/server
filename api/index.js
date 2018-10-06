@@ -1,9 +1,10 @@
-const routes = [
+const apis = [
+  'apps',
   'jobs'
 ];
 
 module.exports = (app) => {
-  routes.map(route => {
-    app.use(`/api/${route}`, require(`./${route}`)(app));
+  apis.map(api => {
+    app.use(`/api/${api}`, require(`./${api}`)(app));
   });
 };
