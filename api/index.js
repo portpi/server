@@ -1,6 +1,8 @@
 const apis = [
   'apps',
-  'jobs'
+  'jobs',
+  'devices',
+  'files'
 ];
 
 module.exports = (app) => {
