@@ -1,4 +1,4 @@
-import { FETCHING_APPS, APPS_RECEIVED } from '../actions/types';
+import { FETCHING_APPS, APPS_RECEIVED, LOAD_APP } from '../actions/types';
 
 export default (state = {}, action) => {
   switch(action.type) {
@@ -11,6 +11,11 @@ export default (state = {}, action) => {
       return {
         list: action.apps,
         isLoading: false
+      };
+
+    case LOAD_APP:
+      return {
+        currentApp: action.app
       };
 
     default:
