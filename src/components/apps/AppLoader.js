@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, Typography } from '@material-ui/core';
+import * as MaterialUICore from '@material-ui/core';
+import * as MaterialUIIcons from '@material-ui/icons';
 import $script from 'scriptjs';
 
 const styles = {
+};
+
+const packages = {
+  'react': React,
+  'prop-types': PropTypes,
+  '@material-ui/core': MaterialUICore,
+  '@material-ui/icons': MaterialUIIcons
 };
 
 class AppLoader extends Component{
@@ -13,12 +21,13 @@ class AppLoader extends Component{
   };
 
   componentDidMount() {
-    // expose React for UMD build
-    window.React = React;
-    window.PropTypes = PropTypes;
-    // async load of remote UMD component
+    // prepare required peer dependencies
+    window.require = (name) => packages[name] || console.error(`Unsupported package for AppLoader: ${name}`);
+    window.module = {};
+
+    // async load of remote cjs component
     $script(`/app/${this.props.app.name}/${this.props.app.info.main}`, () => {
-      let target = window[this.props.app.name];
+      const target = window.module.exports;
       if (target) {
         // loaded OK
         this.setState({
@@ -37,13 +46,13 @@ class AppLoader extends Component{
 
   render() {
     if (this.state.component) {
-      return <this.state.component />
+      return <this.state.component text="test test!" />
     } else if (this.state.error) {
       return <p>{ this.state.error }</p>
     } else {
-      return <Typography variant="body1">Loading...</Typography>
+      return <MaterialUICore.Typography variant="body1">Loading...</MaterialUICore.Typography>
     }
   }
 }
 
-export default withStyles(styles)(AppLoader);
+export default MaterialUICore.withStyles(styles)(AppLoader);
