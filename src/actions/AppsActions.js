@@ -1,5 +1,6 @@
-import { FETCHING_APPS, APPS_RECEIVED, LOAD_APP } from './types';
+import { FETCHING_APPS, APPS_RECEIVED, APP_LOADING, APP_LOADED, APP_LOAD_FAILED } from './types';
 import axios from 'axios';
+import $script from 'scriptjs';
 
 export const fetchApps = () => async dispatch => {
   dispatch({
@@ -13,9 +14,32 @@ export const fetchApps = () => async dispatch => {
   });
 };
 
-export const loadApp = appInfo => async dispatch => {
+export const loadApp = (appName, requireFunction) => async dispatch => {
   dispatch({
-    type: LOAD_APP,
-    app: appInfo
+    type: APP_LOADING
+  });
+
+  const res = await axios.get(`/api/apps/${appName}`);
+  const app = res.data;
+
+  // prepare required peer dependencies
+  window.require = requireFunction;
+  window.module = {};
+
+  // async load of remote cjs component
+  $script(`/app/${app.name}/${app.info.main}`, () => {
+    const target = window.module.exports;
+    if (target) {
+      dispatch({
+        type: APP_LOADED,
+        app: target
+      });
+    } else {
+      dispatch({
+        type: APP_LOAD_FAILED,
+        error: `Cannot load app: ${app.name}`
+      });
+    }
   });
 };
+

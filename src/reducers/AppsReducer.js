@@ -1,4 +1,4 @@
-import { FETCHING_APPS, APPS_RECEIVED, LOAD_APP } from '../actions/types';
+import { FETCHING_APPS, APPS_RECEIVED, APP_LOADING, APP_LOADED, APP_LOAD_FAILED } from '../actions/types';
 
 export default (state = {}, action) => {
   switch(action.type) {
@@ -13,9 +13,21 @@ export default (state = {}, action) => {
         isLoading: false
       };
 
-    case LOAD_APP:
+    case APP_LOADING:
       return {
-        currentApp: action.app
+        isLoading: true
+      };
+
+    case APP_LOADED:
+      return {
+        currentApp: action.app,
+        isLoading: false
+      };
+    
+    case APP_LOAD_FAILED:
+      return {
+        error: action.error,
+        isLoading: false
       };
 
     default:

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Card, CardContent, withStyles, Typography } from '@material-ui/core';
-import * as actions from '../../actions';
+import { Redirect } from 'react-router-dom';
 
 const styles = {
   root: {
@@ -11,12 +10,21 @@ const styles = {
 };
 
 class AppItem extends Component{
+  state = {
+    redirect: false
+  };
 
   onAppSelect = () => {
-    this.props.loadApp(this.props);
+    this.setState({
+      redirect: true
+    });
   };
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={`/${this.props.name}`} />;
+    };
+
     return (
       <Card className={this.props.classes.root} onClick={this.onAppSelect}>
         <CardContent>
@@ -29,4 +37,4 @@ class AppItem extends Component{
   }
 }
 
-export default connect(null, actions)(withStyles(styles)(AppItem));
+export default withStyles(styles)(AppItem);

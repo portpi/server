@@ -1,10 +1,11 @@
 const express = require('express');
 const fs = require('fs-extra');
 const _ = require('lodash');
+const path = require('path');
 
 const router = express.Router();
 
-const APPS_ROOT = '/Users/vxu/Documents/github/portpi/apps';
+const APPS_ROOT = path.join(__dirname, '..', '..', 'apps');
 
 module.exports = app => {
 
@@ -40,6 +41,10 @@ module.exports = app => {
 
   router.get('/', (req, res) => {
     res.json(apps);
+  });
+
+  router.get('/:name', (req, res) => {
+    res.json(_.find(apps, {name: req.params.name}));
   });
 
   return router;
