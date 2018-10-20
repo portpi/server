@@ -28,11 +28,13 @@ export const loadApp = (appName, requireFunction) => async dispatch => {
 
   // async load of remote cjs component
   $script(`/app/${app.name}/${app.info.main}`, () => {
+    debugger;
     const target = window.module.exports;
     if (target) {
       dispatch({
         type: APP_LOADED,
-        app: target
+        app: app,
+        component: target
       });
     } else {
       dispatch({

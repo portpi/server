@@ -56,8 +56,8 @@ class AppLoader extends Component{
       );
     }
 
-    if (apps.currentApp) {
-      return <apps.currentApp/>;
+    if (apps.currentApp && apps.currentApp.component) {
+      return <apps.currentApp.component/>;
     }
 
     return (
